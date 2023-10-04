@@ -40,7 +40,7 @@ jobs:
       - name: build app 🔧
         run: |
           npm install
-          npm run deploy
+          npm run build
         env:
           PUBLIC_URL: /
       - name: Setup Pages
