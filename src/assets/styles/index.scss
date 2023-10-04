@@ -1,0 +1,338 @@
+$border-radius: 4px;
+$font-size: 14px;
+
+// :root {
+// 	--tg-theme-button-text-color: #ffffff;
+// 	--tg-theme-bg-color: rgb(236, 234, 243);
+// 	--tg-theme-text-color: #1a2032;
+// }
+
+$viewport-height: var(--tg-viewport-height);
+$theme-bg-color: var(--tg-theme-bg-color, rgb(36, 34, 49));
+$text-color: var(--tg-theme-text-color, rgb(245, 243, 255));
+$link-color: var(--tg-theme-link-color, darkslateblue);
+$button-color: var(--tg-theme-button-color, darkslateblue);
+$button-text-color: var(--tg-theme-button-text-color, #fff);
+$secondary-bg-color: var(--tg-theme-secondary-bg-color);
+
+$height-field: 40px;
+$outline: #ffffff24;
+$gapField: 8px;
+$gapBlocks: 15px;
+
+$c: calendar;
+
+@mixin picker($pg, $size, $path) {
+	cursor: pointer;
+	// background-color: $button-color;
+	background-image: url('../images/#{$path}.svg');
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: $size;
+	padding: 4px;
+	background-position: center;
+	border-radius: 20px;
+}
+
+::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+	background-color: color-mix(in srgb, $theme-bg-color 85%, #878787 15%);
+}
+::-webkit-scrollbar-thumb {
+	background-color: color-mix(in srgb, $button-color 70%, #626262 30%);
+	border-radius: 9em;
+	box-shadow: inset 1px 1px 10px #00000069;
+}
+::-moz-scrollbar-button:decrement,
+::-moz-scrollbar-button:increment,
+::-webkit-scrollbar-button:decrement,
+::-webkit-scrollbar-button:increment {
+	width: 0;
+}
+
+textarea::-webkit-resizer {
+	background-color: color-mix(in srgb, $theme-bg-color 95%, #878787 15%);
+	border-bottom: 1px solid;
+	border-right: 1px solid;
+}
+
+* {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+	outline: none;
+	border: none;
+	background: none;
+}
+body {
+	overflow: hidden;
+	font-family: sans-serif;
+	height: 100vh;
+	width: 100%;
+	background-color: $theme-bg-color;
+	color: $text-color;
+	font-size: $font-size;
+}
+html,
+body {
+	-webkit-user-select: none;
+	-webkit-touch-callout: none;
+}
+
+#root {
+	padding: 15px;
+	overflow-y: auto;
+	height: 100%;
+	padding: 20px 20px 30px 20px;
+	max-width: 720px;
+	margin: 0 auto;
+}
+
+
+.section__message__select-form {
+	padding: 30px 0;
+
+	h3 {
+		text-align: center;
+	}
+}
+
+.message-app {
+	&.error {
+		color: rgb(255 76 108);
+	}
+	height: 30px;
+	background-color: rgb(58 54 76 / 81%);
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 1;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	align-items: center;
+	justify-content: center;
+	box-shadow: 0px 3px 20px 5px rgba(0, 0, 0, 0.2196078431);
+	color: white;
+	visibility: hidden;
+	transition: 0.2s transform;
+	transform: translateY(-30px);
+
+	&.show {
+		visibility: visible;
+		animation: messageAnim 2.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+	}
+}
+
+@keyframes messageAnim {
+	0% {
+		visibility: visible;
+	}
+	5% {
+		transform: translateY(0);
+	}
+	95% {
+		transform: translateY(0);
+	}
+	100% {
+		transform: translateY(-30px);
+	}
+}
+
+.label-field {
+	display: flex;
+	flex-direction: column;
+	gap: $gapField;
+	transition: 0.2s ease-in-out;
+	width: 100%;
+	flex: 1;
+
+	&:hover {
+		transform: scale(1.007);
+	}
+
+	span {
+		font-size: 13px;
+		color: $text-color;
+	}
+
+	input,
+	textarea {
+		color: color-mix(in srgb, $button-color 70%, #fff 40%);
+		border-radius: $border-radius;
+		padding: 12px 8px;
+		flex: 1;
+		background: $theme-bg-color;
+		outline: $outline 1px solid;
+		filter: brightness(85%);
+	}
+
+	.input-field {
+		height: 100%;
+		width: 100%;
+		max-height: $height-field;
+	}
+
+	.area-field {
+		min-height: 150px;
+		max-height: max-content;
+		display: flex;
+		cursor: text;
+		text-align: left;
+		align-items: flex-start;
+		justify-content: flex-start;
+		flex-direction: column;
+		position: relative;
+		resize: vertical;
+		flex: auto;
+	}
+
+	&.checkbox {
+		display: flex;
+		gap: 20px;
+		cursor: pointer;
+		align-items: center;
+		flex-direction: row;
+		align-self: stretch;
+		flex: 50% 1;
+
+		@media screen and (max-width: 460px) {
+			flex: 1 1;
+			background: none;
+		}
+
+		input[type='checkbox'] {
+			visibility: hidden;
+			position: relative;
+			width: 35px;
+			height: 35px;
+			cursor: pointer;
+
+			&::after {
+				content: '';
+				position: absolute;
+				width: 30px;
+				height: 30px;
+				background: $theme-bg-color;
+				outline: $outline 1px solid;
+				filter: brightness(95%);
+				visibility: visible;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				border-radius: $border-radius;
+			}
+
+			&:checked::after {
+				content: '\2713';
+				color: color-mix(in srgb, $button-color 70%, #fff 40%);
+				font-size: 22px;
+				outline: $outline 1px solid;
+			}
+		}
+	}
+
+	& .date,
+	& .time {
+	}
+}
+
+.app {
+	&__title {
+		text-align: center;
+		font-size: 20px;
+		padding: 15px 0;
+		filter: brightness(85%);
+	}
+
+	&__form {
+		display: flex;
+		flex-direction: column;
+		gap: 15px;
+
+		padding: 10px 0 30px;
+	}
+}
+
+.btn {
+	cursor: pointer;
+	padding: 12px;
+	border-radius: $border-radius;
+	transition: 0.2s;
+	border: 2px solid $button-color;
+	color: $button-color;
+
+	&:disabled {
+		cursor: not-allowed;
+		opacity: 0.5;
+	}
+	&.disabled {
+		cursor: not-allowed;
+		opacity: 0.5;
+	}
+
+	&.select {
+		background-color: $button-color;
+		color: $button-text-color;
+		border-color: $button-color;
+	}
+
+	&-submit {
+		background-color: $button-color;
+		margin-top: 20px;
+		color: $button-text-color;
+	}
+	// &.add-field {
+	// 	width: $height-field;
+	// 	margin-left: auto;
+	// 	height: $height-field;
+	// 	display: flex;
+	// 	padding: 0;
+	// 	align-items: center;
+	// 	justify-content: center;
+	// 	font-size: 21px;
+	// }
+}
+
+.hide {
+	opacity: 0;
+	visibility: hidden;
+}
+
+.people-tag {
+	display: flex;
+	gap: 3px;
+	font-size: 13px;
+}
+
+.date {
+	::-webkit-calendar-picker-indicator {
+		@include picker(10px, 16px, calendar);
+	}
+	.no-picker::before {
+		content: '';
+		@include picker(16px, 16px, calendar);
+	}
+}
+.time {
+	@include picker(10px, 16px, clock);
+
+	::-webkit-calendar-picker-indicator {
+		@include picker(10px, 16px, clock);
+	}
+	.no-picker::before {
+		content: '';
+		@include picker(16px, 16px, clock);
+	}
+}
+
+input[type='time'],
+input[type='date'] {
+	&::-webkit-calendar-picker-indicator {
+		filter: invert(0.7);
+		font-size: 15px;
+		cursor: pointer;
+	}
+}
