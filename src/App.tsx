@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { CheckBoxField } from './components/ui/CheckboxField';
 import { TextField } from './components/ui/TextField';
 import useFormState, { TKey } from './store/index';
@@ -6,16 +7,22 @@ import { EKey } from './types/common';
 const App = () => {
 	const state = useFormState((state) => state.formState);
 	const setValue = useFormState((state) => state.setValue);
+	const [url, setUrl] = useState('');
 
 	const setValueHandler = (key: TKey, value: string | boolean) => {
 		setValue(key, value);
 	};
+
+	useEffect(() => {
+		setUrl(location.href);
+	}, []);
 
 	const submit = () => {};
 
 	return (
 		<div className="app container">
 			<h3 className="app__title">Данные клиента</h3>
+			{url}
 			<div className="app__form">
 				<TextField
 					label="Введите имя клиента"
@@ -29,7 +36,6 @@ const App = () => {
 					value={state.name}
 					setValue={({ target }) => setValueHandler(EKey.LASTNAME, target.value)}
 				/>
-				
 
 				{/* @TODO:Сделать валидацию */}
 				<TextField
