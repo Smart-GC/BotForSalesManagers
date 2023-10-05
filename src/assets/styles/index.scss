@@ -17,6 +17,7 @@ $secondary-bg-color: var(--tg-theme-secondary-bg-color);
 
 $height-field: 40px;
 $outline: #ffffff24;
+$outline-active: #ffffff57;
 $gapField: 8px;
 $gapBlocks: 15px;
 
@@ -89,7 +90,6 @@ body {
 	margin: 0 auto;
 }
 
-
 .section__message__select-form {
 	padding: 30px 0;
 
@@ -156,6 +156,7 @@ body {
 	span {
 		font-size: 13px;
 		color: $text-color;
+		width: max-content;
 	}
 
 	input,
@@ -196,12 +197,13 @@ body {
 		align-items: center;
 		flex-direction: row;
 		align-self: stretch;
-		flex: 50% 1;
+		flex: 100% 1;
+		justify-content: start;
 
-		@media screen and (max-width: 460px) {
-			flex: 1 1;
-			background: none;
-		}
+		// @media screen and (max-width: 460px) {
+		// 	flex: 1 1;
+		// 	background: none;
+		// }
 
 		input[type='checkbox'] {
 			visibility: hidden;
@@ -209,6 +211,7 @@ body {
 			width: 35px;
 			height: 35px;
 			cursor: pointer;
+			flex: 35px 1;
 
 			&::after {
 				content: '';
@@ -223,13 +226,14 @@ body {
 				align-items: center;
 				justify-content: center;
 				border-radius: $border-radius;
+				right: 0;
 			}
 
 			&:checked::after {
 				content: '\2713';
 				color: color-mix(in srgb, $button-color 70%, #fff 40%);
 				font-size: 22px;
-				outline: $outline 1px solid;
+				outline: $outline-active 1px solid;
 			}
 		}
 	}

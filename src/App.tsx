@@ -14,7 +14,9 @@ const App = () => {
 	};
 
 	useEffect(() => {
-		setUrl(location.href);
+		const queryParams = new URLSearchParams(location.href);
+		const userName = queryParams.get('user_name');
+		setUrl(userName ?? '');
 	}, []);
 
 	const submit = () => {};
@@ -33,7 +35,7 @@ const App = () => {
 				<TextField
 					label="Введите фамилию клиента"
 					plaseholder="Фамилия"
-					value={state.name}
+					value={state.lastName}
 					setValue={({ target }) => setValueHandler(EKey.LASTNAME, target.value)}
 				/>
 
